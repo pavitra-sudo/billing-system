@@ -1,10 +1,10 @@
 # models/shop_owner.py
 
 from sqlalchemy import Column, Integer, String
-from ..database.db import PublicBase
+from api.database.db import PublicBase
 
 class ShopOwner(PublicBase):
-    __tablename__ = "shop_owner"
+    __tablename__ = "tenant"
     __table_args__ = {"schema": "public"}  # IMPORTANT
 
     id = Column(Integer, primary_key=True, index=True)

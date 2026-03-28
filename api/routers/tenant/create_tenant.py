@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from ..database.db import get_db
-from ..schemas.shop_owner import ShopOwnerCreate, ShopOwnerResponse
-from ..services.create_shop_owner_service import ShopOwnerService
+from ...database.db import get_db
+from ...schemas.tenant.create_tenant import ShopOwnerCreate, ShopOwnerResponse
+from ...services.tenant.create_tenant import ShopOwnerService
 
 router = APIRouter(
     prefix="/shop-owner",
