@@ -1,7 +1,7 @@
 # repository/shop_owner_repo.py
 
 from sqlalchemy.orm import Session
-from api.models.shop_owner import ShopOwner
+from api.models.create_shop_owner import ShopOwner
 
 
 class ShopOwnerRepository:

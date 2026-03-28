@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi import HTTPException
 
-from ..repository.shop_owner_repo import ShopOwnerRepository
+from ..repository.create_shop_owner_repo import ShopOwnerRepository
 
 
 class ShopOwnerService:

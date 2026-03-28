@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from ..database.db import get_db
 from ..schemas.shop_owner import ShopOwnerCreate, ShopOwnerResponse
-from ..services.shop_owner_service import ShopOwnerService
+from ..services.create_shop_owner_service import ShopOwnerService
 
 router = APIRouter(
     prefix="/shop-owner",
