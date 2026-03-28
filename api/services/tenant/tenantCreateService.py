@@ -2,42 +2,59 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi import HTTPException
 
-from ...repository.tenant.tenantCreateRepo import ShopOwnerRepository
+from api.models.tenant.tenantModel import ShopOwner
+from api.database.db import engine, ShopBase
+
+# FORCE import of all ShopBase models
+from api.models.shop.shopModel import ShopDetail, Customer, Product, Order, OrderItem
 
 
 class ShopOwnerService:
 
-    def __init__(self):
-        self.repo = ShopOwnerRepository()
-
     def create_shop_owner(self, db: Session, request):
-        
+
         # 🔹 check existing
-        existing = self.repo.get_by_email(db, request.email)
+        existing = db.query(ShopOwner).filter(
+            ShopOwner.email == request.email
+        ).first()
+
         if existing:
             raise HTTPException(status_code=400, detail="Email already exists")
 
         try:
-            # 🔹 create user (flush → id available)
-            owner = self.repo.create(db, {
-                "name": request.name,
-                "email": request.email,
-                "password": request.password,
-                "schema_name": None
-            })
+            # 🔹 create user
+            owner = ShopOwner(
+                name=request.name,
+                email=request.email,
+                password=request.password,
+                schema_name=None
+            )
 
-            # 🔹 generate schema
-            schema_name = f"schema_shop_{int(owner.id)}" # type: ignore
+            db.add(owner)
+            db.flush()
+
+            # 🔹 create schema name
+            schema_name = f"schema_shop_{owner.id}"
 
             # 🔹 create schema
             db.execute(
                 text(f'CREATE SCHEMA IF NOT EXISTS "{schema_name}"')
             )
 
-            # 🔹 update schema name
-            owner.schema_name = schema_name # type: ignore
+            # 🔹 update owner first
+            owner.schema_name = schema_name  # type: ignore
+            db.flush()
+            db.commit()
 
-            # 🔹 commit everything
+            # ✅ IMPORTANT: commit so schema is visible
+
+            # 🔥 now create tables (new connection can see schema)
+            ShopBase.metadata.create_all(
+                bind=engine.execution_options(
+                    schema_translate_map={None: schema_name}
+                )
+            )
+
             db.commit()
             db.refresh(owner)
 
