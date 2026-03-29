@@ -1,0 +1,21 @@
+# core/dependencies.py
+
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+from api.auth.token import decode_token
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="tenant_login")
+
+
+def get_current_schema(token: str = Depends(oauth2_scheme)):
+    payload = decode_token(token)
+
+    if payload is None:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    schema = payload.get("schema")
+
+    if not schema:
+        raise HTTPException(status_code=401, detail="Schema missing in token")
+
+    return schema

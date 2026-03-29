@@ -1,10 +1,10 @@
 # db.py
 
 import os
+from fastapi import Request
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker, declarative_base
 from dotenv import load_dotenv
-
 
 
 load_dotenv()
@@ -13,36 +13,38 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL environment variable is not set")
 
-# 1. Engine (connection pool)
+# Engine
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,   # prevents stale connections
+    pool_pre_ping=True,
     pool_size=5,
-    max_overflow=10           # disable in production
+    max_overflow=10
 )
 
-# 2. Session factory
+# Session
 SessionLocal = sessionmaker(
     bind=engine,
     autoflush=False,
     autocommit=False
 )
 
-# 3. Base classes (IMPORTANT for your multi-schema design)
+# Base classes
 PublicBase = declarative_base()
 ShopBase = declarative_base()
 
-# 4. Dependency (used later in FastAPI)
-def get_db():
-    db = SessionLocal()
+
+def get_db(request: Request):
+    db: Session = SessionLocal()
+
     try:
+        schema = getattr(request.state, "schema", None)
+
+        print("👉 Schema inside get_db:", schema)
+
+        if schema:
+            db.execute(text("SET search_path TO :schema"), {"schema": schema})
+
         yield db
+
     finally:
         db.close()
-        
-def set_schema(db: Session, schema_name: str):
-    # basic validation (avoid injection)
-    if not schema_name.startswith("schema_"):
-        raise ValueError("Invalid schema name")
-
-    db.execute(text(f'SET search_path TO "{schema_name}"'))

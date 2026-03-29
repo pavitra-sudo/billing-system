@@ -5,6 +5,9 @@ from fastapi import HTTPException
 from api.models.tenant.tenantModel import Tenant
 from api.database.db import engine, ShopBase
 from api.models.shop.product import Product
+from api.auth.hashing import get_password_hash
+from api.services.tenant.schemafetch import SchemaMiddleware
+
 
 
 
@@ -12,7 +15,9 @@ from api.models.shop.product import Product
 class ShopOwnerService:
 
     def create_shop_owner(self, db: Session, request):
-
+        
+        request.password = get_password_hash(request.password)
+        
         # 🔹 check existing
         existing = db.query(Tenant).filter(
             Tenant.email == request.email

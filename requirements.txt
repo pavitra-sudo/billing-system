@@ -5,3 +5,6 @@ psycopg2-binary
 alembic
 python-dotenv
 pydantic[email]
+pwdlib[argon2]
+python-jose
+python-multipart
