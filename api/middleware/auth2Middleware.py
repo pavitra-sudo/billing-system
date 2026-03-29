@@ -1,12 +1,17 @@
 # middleware/auth_middleware.py
-
+import os
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request
 from starlette.responses import JSONResponse
 from jose import jwt, JWTError
+from dotenv import load_dotenv
 
-SECRET_KEY = "your-secret"  # In production, use a secure method to store this
-ALGORITHM = "HS256"
+
+load_dotenv()
+
+
+SECRET_KEY = os.getenv("SECRET_KEY","None") # In production, use a secure method to store this
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
 
 
 class AuthMiddleware(BaseHTTPMiddleware):
