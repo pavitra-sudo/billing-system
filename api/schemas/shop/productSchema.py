@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 class ProductCreateRequest(BaseModel):
@@ -26,3 +28,29 @@ class ProductDeleteResponse(BaseModel):
 
     class Config:
         from_attributes = True   # 👈 required for ORM → JSON
+        
+class ProductUpdateRequest(BaseModel):
+    id: int
+    name: str
+    price: float
+    
+class ProductUpdateResponse(BaseModel):
+    id: int
+    name: str
+    price: float
+    message: str
+
+    class Config:
+        from_attributes = True   # 👈 required for ORM → JSON
+        
+        
+
+        
+class ProductGetResponse(BaseModel):
+    id: int
+    name: str
+    price: float
+
+    class Config:
+        from_attributes = True   # 👈 required for ORM → JSON
+        

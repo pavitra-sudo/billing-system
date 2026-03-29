@@ -4,9 +4,8 @@ from datetime import datetime
 
 from fastapi import FastAPI
 from api.routers.tenant import tenantCreate, tenantLogin
-from api.routers.shop.product import createProduct, deleteProduct
+from api.routers.shop.product import createProduct, deleteProduct, getProduct, updateProduct
 from api.database.db import PublicBase, engine
-from api.middleware.schemaFetch import SchemaMiddleware
 from api.middleware.auth2Middleware import AuthMiddleware
 from time import sleep
 
@@ -25,7 +24,7 @@ while True:
         
         
         
-#app.add_middleware(SchemaMiddleware)# global middleware for schema fetching
+
 app.add_middleware(AuthMiddleware)  # global middleware for auth
   
 
@@ -33,9 +32,12 @@ app.add_middleware(AuthMiddleware)  # global middleware for auth
 app.include_router(tenantCreate.router)
 app.include_router(tenantLogin.router)
 
-# shop routers
+# product routers
 app.include_router(createProduct.router)
 app.include_router(deleteProduct.router)
+app.include_router(updateProduct.router)
+app.include_router(getProduct.router)
+
 
 
 
