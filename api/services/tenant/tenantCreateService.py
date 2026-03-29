@@ -6,7 +6,7 @@ from api.models.tenant.tenantModel import Tenant
 from api.database.db import engine, ShopBase
 from api.models.shop.product import Product
 from api.auth.hashing import get_password_hash
-from api.services.tenant.schemafetch import SchemaMiddleware
+from api.middleware.schemaFetch import SchemaMiddleware
 
 
 
