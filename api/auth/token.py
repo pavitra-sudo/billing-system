@@ -2,10 +2,13 @@
 
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
+from dotenv import load_dotenv
+import os  
 
-SECRET_KEY = "your-secret"
+
+SECRET_KEY = "your-secret"  # In production, use a secure method to store thi
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 # default to 60 if not set
 
 
 def create_access_token(data: dict):

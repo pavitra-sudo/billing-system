@@ -7,7 +7,9 @@ from api.routers.tenant import tenantCreate, tenantLogin
 from api.routers.shop.product import createProduct, deleteProduct
 from api.database.db import PublicBase, engine
 from api.middleware.schemaFetch import SchemaMiddleware
+from api.middleware.auth2Middleware import AuthMiddleware
 from time import sleep
+
 
 app = FastAPI(title="Billing System API")
 
@@ -23,7 +25,8 @@ while True:
         
         
         
-app.add_middleware(SchemaMiddleware)  # global middleware for schema fetching
+#app.add_middleware(SchemaMiddleware)# global middleware for schema fetching
+app.add_middleware(AuthMiddleware)  # global middleware for auth
   
 
 # tenant  routers
