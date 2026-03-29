@@ -11,7 +11,7 @@ from api.auth.token import create_access_token
 
 
 
-router = APIRouter(prefix="/tenant-login",
+router = APIRouter(prefix="/login-tenant",
     tags=["Tenant Management"])
 
 

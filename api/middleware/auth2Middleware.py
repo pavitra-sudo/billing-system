@@ -10,7 +10,6 @@ ALGORITHM = "HS256"
 
 
 class AuthMiddleware(BaseHTTPMiddleware):
-
     async def dispatch(self, request: Request, call_next):
 
         # ✅ Allow preflight requests
@@ -21,7 +20,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
         print("➡️ PATH:", path)
 
         public_prefixes = (
-            "/tenant-login",
+            "/login-tenant",
             "/create-tenant",
             "/docs",
             "/openapi",

@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from fastapi import FastAPI
-from api.routers.tenant import tenantCreate, tenantLogin
+from api.routers.tenant import createTenant, loginTenant
 from api.routers.shop.product import createProduct, deleteProduct, getProduct, updateProduct
 from api.database.db import PublicBase, engine
 from api.middleware.auth2Middleware import AuthMiddleware
@@ -29,8 +29,8 @@ app.add_middleware(AuthMiddleware)  # global middleware for auth
   
 
 # tenant  routers
-app.include_router(tenantCreate.router)
-app.include_router(tenantLogin.router)
+app.include_router(createTenant.router)
+app.include_router(loginTenant.router)
 
 # product routers
 app.include_router(createProduct.router)
