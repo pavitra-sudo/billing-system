@@ -13,7 +13,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY","None") # In production, use a secure method to store this
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 
-
+    
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
 
