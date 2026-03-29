@@ -6,7 +6,7 @@ class ProductCreate(BaseModel):
 
 
 
-class ProductResponse(BaseModel):
+class ProductCreateResponse(BaseModel):
     id: int
     name: str
     price: float
