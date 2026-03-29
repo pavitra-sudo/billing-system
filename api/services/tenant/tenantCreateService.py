@@ -4,9 +4,9 @@ from fastapi import HTTPException
 
 from api.models.tenant.tenantModel import ShopOwner
 from api.database.db import engine, ShopBase
+from api.models.shop.shopModel import Product
 
-# FORCE import of all ShopBase models
-from api.models.shop.shopModel import ShopDetail, Customer, Product, Order, OrderItem
+
 
 
 class ShopOwnerService:
