@@ -4,16 +4,16 @@ from sqlalchemy import text
 
 from api.database.db import get_db
 from api.models.shop.product import Product
-from api.schemas.shop.productSchema import ProductCreate, ProductCreateResponse
+from api.schemas.shop.productSchema import ProductCreateRequest, ProductCreateResponse
 
-router = APIRouter(prefix="/products", tags=["Products"])
+router = APIRouter(prefix="/create-product", tags=["Products"])
 
 
 # 🔹 helper: set schema
 
 
 @router.post("/", response_model=ProductCreateResponse)
-def create_product(request: ProductCreate, db: Session = Depends(get_db)):
+def create_product(request: ProductCreateRequest, db: Session = Depends(get_db)):
 
 
     product = Product(
