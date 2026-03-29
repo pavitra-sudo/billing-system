@@ -1,9 +1,11 @@
 # db.py
 
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import Session, sessionmaker, declarative_base
 from dotenv import load_dotenv
+
+
 
 load_dotenv()
 
@@ -37,3 +39,10 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+def set_schema(db: Session, schema_name: str):
+    # basic validation (avoid injection)
+    if not schema_name.startswith("schema_"):
+        raise ValueError("Invalid schema name")
+
+    db.execute(text(f'SET search_path TO "{schema_name}"'))

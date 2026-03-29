@@ -3,7 +3,8 @@ from pydantic import BaseModel
 class ProductCreate(BaseModel):
     name: str
     price: float
-    
+    schema_name: str   # 👈 which schema (schema_shop_x)
+
 
 class ProductResponse(BaseModel):
     id: int
@@ -11,4 +12,4 @@ class ProductResponse(BaseModel):
     price: float
 
     class Config:
-        from_attributes = True
+        from_attributes = True   # 👈 required for ORM → JSON

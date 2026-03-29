@@ -1,9 +1,9 @@
-# models/shop_owner.py
+# models/tenant/tenantModel.py
 
 from sqlalchemy import Column, Integer, String
 from api.database.db import PublicBase
 
-class ShopOwner(PublicBase):
+class Tenant(PublicBase):
     __tablename__ = "tenant"
     __table_args__ = {"schema": "public"}  # IMPORTANT
 

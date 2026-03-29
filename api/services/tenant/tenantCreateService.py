@@ -2,9 +2,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi import HTTPException
 
-from api.models.tenant.tenantModel import ShopOwner
+from api.models.tenant.tenantModel import Tenant
 from api.database.db import engine, ShopBase
-from api.models.shop.shopModel import Product
+from api.models.shop.product import Product
 
 
 
@@ -14,8 +14,8 @@ class ShopOwnerService:
     def create_shop_owner(self, db: Session, request):
 
         # 🔹 check existing
-        existing = db.query(ShopOwner).filter(
-            ShopOwner.email == request.email
+        existing = db.query(Tenant).filter(
+            Tenant.email == request.email
         ).first()
 
         if existing:
@@ -23,7 +23,7 @@ class ShopOwnerService:
 
         try:
             # 🔹 create user
-            owner = ShopOwner(
+            owner = Tenant(
                 name=request.name,
                 email=request.email,
                 password=request.password,

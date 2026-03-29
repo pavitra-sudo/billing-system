@@ -4,6 +4,7 @@ from datetime import datetime
 
 from fastapi import FastAPI
 from api.routers.tenant import tenantCreate
+from api.routers.shop import prouduct
 from api.database.db import PublicBase, engine
 from time import sleep
 
@@ -26,6 +27,7 @@ while True:
 
 # include routers
 app.include_router(tenantCreate.router)
+app.include_router(prouduct.router)
 
 
 @app.get("/")
