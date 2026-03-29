@@ -4,7 +4,7 @@ from datetime import datetime
 
 from fastapi import FastAPI
 from api.routers.tenant import tenantCreate, tenantLogin
-from api.routers.shop.product import prouduct
+from api.routers.shop.product import product
 from api.database.db import PublicBase, engine
 from api.middleware.schemaFetch import SchemaMiddleware
 from time import sleep
@@ -28,7 +28,7 @@ app.add_middleware(SchemaMiddleware)  # global middleware for schema fetching
 
 # include routers
 app.include_router(tenantCreate.router)
-app.include_router(prouduct.router)
+app.include_router(product.router)
 app.include_router(tenantLogin.router)
 
 @app.get("/")

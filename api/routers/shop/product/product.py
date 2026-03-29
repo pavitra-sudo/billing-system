@@ -4,7 +4,7 @@ from sqlalchemy import text
 
 from api.database.db import get_db
 from api.models.shop.product import Product
-from api.schemas.shop.product import ProductCreate, ProductCreateResponse
+from api.schemas.shop.productSchema import ProductCreate, ProductCreateResponse
 
 router = APIRouter(prefix="/products", tags=["Products"])
 

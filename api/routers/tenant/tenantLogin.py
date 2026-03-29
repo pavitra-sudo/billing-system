@@ -11,10 +11,11 @@ from api.auth.token import create_access_token
 
 
 
-router = APIRouter()
+router = APIRouter(prefix="/tenant-login",
+    tags=["Tenant Management"])
 
 
-@router.post("/tenant_login")
+@router.post("/", status_code=status.HTTP_200_OK)
 def tenant_login(
     request: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
