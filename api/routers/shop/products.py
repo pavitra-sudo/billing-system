@@ -10,14 +10,14 @@ router = APIRouter(prefix="/api/products", tags=["Products"])
 
 
 # POST /api/products/ - create product
-@router.post("/", response_model=ProductCreateResponse)
+@router.post("/", response_model=ProductCreateResponse,status_code=201)
 def create_product(request: ProductCreateRequest, db: Session = Depends(get_db)):
     return ProductCreateService.create_product(db, request)
 
 
 # DELETE /api/products/{id} - delete product
 
-@router.delete("/{id}", response_model=ProductDeleteResponse, status_code=200)
+@router.delete("/{id}",  status_code=204)
 def delete_product(id: int, db: Session = Depends(get_db)):
     return ProductDeleteService.delete_product(db, id)
     

@@ -43,20 +43,19 @@ class ProductCreateService:
 
         return product
     
+    
 class ProductUpdateService:
     
     @staticmethod
-    def update_product(db: Session, product_id: int, request: ProductUpdateRequest):
+    def update_product(db: Session, id: int, request: ProductUpdateRequest):
 
         product = db.query(Product).filter(Product.id == id).first()
 
         if not product:
             raise HTTPException(status_code=404, detail="Product not found")
 
-        if request.name is not None:
-            product.name = request.name  # type: ignore
-        if request.price is not None:
-            product.price = request.price  # type: ignore
+        product.name = request.name  # type: ignore
+        product.price = request.price  # type: ignore
             
         db.commit()
         db.refresh(product)
@@ -69,10 +68,11 @@ class ProductUpdateService:
             "message": "Product updated successfully"
         }
         
+        
 class ProductDeleteService:
     
     @staticmethod
-    def delete_product(db: Session, product_id: int):
+    def delete_product(db: Session, id: int):
 
         product = db.query(Product).filter(Product.id == id).first()
 
@@ -82,7 +82,4 @@ class ProductDeleteService:
 
         db.delete(product)
         db.commit()
-
-        return {
-        "id": id,
-        "message": "Product deleted successfully"}
+        return 

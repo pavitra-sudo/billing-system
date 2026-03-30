@@ -29,8 +29,9 @@ class ProductDeleteResponse(BaseModel):
         from_attributes = True   
         
 class ProductUpdateRequest(BaseModel):
-    name: Optional[str]
-    price: Optional[float]
+    name: str
+    price: float
+
     
     
 class ProductUpdateResponse(BaseModel):
