@@ -39,7 +39,7 @@ def get_product(id: int, db: Session = Depends(get_db)):
 # GET /api/products/ - get all products
 
 @router.get("/", response_model=list[ProductGetResponse], status_code=200)
-def get_all_products(db: Session = Depends(get_db)):
+def get_all_products(db: Session = Depends(get_db),name: str | None = None):
     return ProductGetService.get_all_products(db)
 
 #PATCH /api/products/{id} - partial update product (optional fields)

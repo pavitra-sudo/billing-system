@@ -7,10 +7,10 @@ from api.schemas.shop.product import ProductCreateRequest, ProductPatchRequest ,
 class ProductGetService:
 
     @staticmethod
-    def get_product_by_id(db: Session, product_id: int) -> Product:
+    def get_product_by_id(db: Session, id: int) -> Product:
         product = (
             db.query(Product)
-            .filter(Product.id == product_id)
+            .filter(Product.id == id)
             .first()
         )
 
@@ -23,8 +23,12 @@ class ProductGetService:
         return product
     
     @staticmethod
-    def get_all_products(db: Session) -> list[Product]:
-        return db.query(Product).all()
+    def get_all_products(db: Session,name: str | None = None) -> list[Product]:
+        query = db.query(Product)
+        if name is not None and name.strip():
+            query = query.filter(Product.name.ilike(f"%{name.strip()}%"))
+
+        return query.all()
     
 
 
@@ -83,6 +87,8 @@ class ProductDeleteService:
         db.delete(product)
         db.commit()
         return 
+    
+    
     
 class ProductPatchService:
     
