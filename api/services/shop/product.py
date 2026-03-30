@@ -43,7 +43,7 @@ class ProductService:
     )
 
         db.add(product)
-        db.commit()
+        db.flush()
         db.refresh(product)
 
         return product
@@ -63,7 +63,7 @@ class ProductService:
 
 
         db.delete(product)
-        db.commit()
+        db.flush()
         return 
     
     
@@ -86,7 +86,7 @@ class ProductService:
         if request.barcode is not None:
             product.barcode = request.barcode  # type: ignore
             
-        db.commit()
+        db.flush()
         db.refresh(product)
         
         product_data = {
@@ -97,3 +97,4 @@ class ProductService:
             "message": "Product updated successfully"}
     
         return product_data
+    

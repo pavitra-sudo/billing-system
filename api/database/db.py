@@ -45,6 +45,9 @@ def get_db(request: Request):
             db.execute(text("SET search_path TO :schema"), {"schema": schema})
 
         yield db
-
+        db.commit()
+    except:
+        db.rollback()
+        raise
     finally:
         db.close()
