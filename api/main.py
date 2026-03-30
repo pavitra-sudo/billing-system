@@ -2,8 +2,6 @@
 from fastapi import FastAPI
 from datetime import datetime
 from api.models.tenant.tenant import Tenant
-from api.models.tenant.billcounter import BillCounter
-
 from api.routers.shop import products
 from api.routers.tenant import  tenant
 from api.database.db import PublicBase, engine

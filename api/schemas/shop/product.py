@@ -1,13 +1,13 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 # Product Schemas
 
 class ProductCreateRequest(BaseModel):
     name: str
     price: float
-
+    barcode: str = Field(..., max_length=50)   
 
 
 class ProductCreateResponse(BaseModel):
@@ -21,16 +21,10 @@ class ProductCreateResponse(BaseModel):
         
         
         
-class ProductDeleteResponse(BaseModel):
-    id: int
-    message: str
-
-    class Config:
-        from_attributes = True   
-        
 class ProductUpdateRequest(BaseModel):
     name: str
     price: float
+    barcode: str = Field(..., max_length=50)   
 
     
     
@@ -49,6 +43,8 @@ class ProductGetResponse(BaseModel):
     id: int
     name: str
     price: float
+    barcode: str
+
 
     class Config:
         from_attributes = True   
@@ -57,12 +53,14 @@ class ProductGetResponse(BaseModel):
 class ProductPatchRequest(BaseModel):
     name: Optional[str] = None
     price: Optional[float] = Field(default=None, gt=0)
+    barcode: Optional[str] = Field(default=None, max_length=50)
   
     
 class ProductPatchResponse(BaseModel):
     id: int
     name: str
     price: float
+    barcode: str
     message: str
 
     class Config:

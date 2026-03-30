@@ -16,28 +16,24 @@ def create_product(request: ProductCreateRequest, db: Session = Depends(get_db))
 
 
 # DELETE /api/products/{id} - delete product
-
 @router.delete("/{id}",  status_code=204,responses= {404: {"description": "Product not found"}})
 def delete_product(id: int, db: Session = Depends(get_db)):
     return ProductService.delete_product(db, id)
 
 
 # PUT /api/products/{id} - update product
-
 @router.put("/{id}", response_model=ProductUpdateResponse, status_code=200, responses= {404: {"description": "Product not found"}})
 def update_product(id: int, request: ProductUpdateRequest, db: Session = Depends(get_db)):
     return ProductService.update_product(db, id, request)
 
 
 # GET /api/products/{id} - get product by id 
-
 @router.get("/{id}", response_model=ProductGetResponse, status_code=200, responses= {404: {"description": "Product not found"}})
 def get_product(id: int, db: Session = Depends(get_db)):
     return ProductService.get_product_by_id(db, id)
 
 
 # GET /api/products/ - get all products
-
 @router.get("/", response_model=list[ProductGetResponse], status_code=200)
 def get_all_products(db: Session = Depends(get_db),name: str | None = None):
     return ProductService.get_all_products(db,name)

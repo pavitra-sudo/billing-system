@@ -38,7 +38,8 @@ class ProductService:
     def create_product(db: Session, request: ProductCreateRequest):
         product = Product(
         name=request.name,
-        price=request.price
+        price=request.price,
+        barcode=request.barcode
     )
 
         db.add(product)
@@ -59,17 +60,18 @@ class ProductService:
 
         product.name = request.name  # type: ignore
         product.price = request.price  # type: ignore
+        product.barcode = request.barcode  # type: ignore
             
         db.commit()
         db.refresh(product)
-
-
-        return {
+        product_data = {
             "id": id,
             "name": product.name,
             "price": product.price,
-            "message": "Product updated successfully"
-        }
+            "message": "Product updated successfully"}
+
+
+        return product_data
         
         
     # Static method to delete a product
@@ -102,14 +104,18 @@ class ProductService:
 
         if request.price is not None:
             product.price = request.price  # type: ignore
+        
+        if request.barcode is not None:
+            product.barcode = request.barcode  # type: ignore
             
         db.commit()
         db.refresh(product)
-
-
-        return {
+        
+        product_data = {
             "id": id,
             "name": product.name,
             "price": product.price,
-            "message": "Product updated successfully"
-        }
+            "barcode": product.barcode,
+            "message": "Product updated successfully"}
+    
+        return product_data
