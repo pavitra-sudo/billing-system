@@ -4,8 +4,9 @@ from api.models.shop.product import Product
 from api.schemas.shop.product import ProductCreateRequest, ProductPatchRequest ,ProductUpdateRequest
 
 
-class ProductGetService:
-
+class ProductService:
+    
+    # Static method to get a product by ID
     @staticmethod
     def get_product_by_id(db: Session, id: int) -> Product:
         product = (
@@ -22,6 +23,7 @@ class ProductGetService:
 
         return product
     
+    # Static method to get all products, with optional name filtering
     @staticmethod
     def get_all_products(db: Session,name: str | None = None) -> list[Product]:
         query = db.query(Product)
@@ -31,9 +33,7 @@ class ProductGetService:
         return query.all()
     
 
-
-class ProductCreateService:
-    
+    # Static method to create a new product
     @staticmethod
     def create_product(db: Session, request: ProductCreateRequest):
         product = Product(
@@ -48,8 +48,7 @@ class ProductCreateService:
         return product
     
     
-class ProductUpdateService:
-    
+    # Static method to update an existing product
     @staticmethod
     def update_product(db: Session, id: int, request: ProductUpdateRequest):
 
@@ -73,8 +72,7 @@ class ProductUpdateService:
         }
         
         
-class ProductDeleteService:
-    
+    # Static method to delete a product
     @staticmethod
     def delete_product(db: Session, id: int):
 
@@ -89,9 +87,8 @@ class ProductDeleteService:
         return 
     
     
-    
-class ProductPatchService:
-    
+
+    # Static method to partially update a product
     @staticmethod
     def patch_product(db: Session, id: int, request: ProductPatchRequest):
 
