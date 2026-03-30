@@ -1,8 +1,9 @@
 # main.py
-
-from datetime import datetime
-
 from fastapi import FastAPI
+from datetime import datetime
+from api.models.tenant.tenant import Tenant
+from api.models.tenant.billcounter import BillCounter
+
 from api.routers.shop import products
 from api.routers.tenant import  tenant
 from api.database.db import PublicBase, engine
@@ -25,8 +26,8 @@ while True:
         
         
 
-app.add_middleware(AuthMiddleware)  # global middleware for auth
-  
+#app.add_middleware(AuthMiddleware)  # global middleware for auth
+
 
 # tenant  routers
 app.include_router(tenant.router)

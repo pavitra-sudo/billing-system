@@ -12,3 +12,5 @@ class Tenant(PublicBase):
     email = Column(String(150), unique=True, nullable=False, index=True)
     password = Column(String(255), nullable=False)
     schema_name = Column(String(100), nullable=True)
+    
+    

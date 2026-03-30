@@ -6,7 +6,6 @@ from ...services.tenant.tenant import ShopOwnerService, TenantLoginService
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
-from api.models.tenant.tenant import Tenant
 from api.auth.hashing import  verify_password
 from api.auth.token import create_access_token
 
