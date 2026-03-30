@@ -1,6 +1,6 @@
 # schemas/shop_owner.py
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field
 
 
 # Request Schema (input)

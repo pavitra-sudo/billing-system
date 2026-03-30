@@ -22,7 +22,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         path = request.url.path
-        print("➡️ PATH:", path)
+        print(" PATH:", path)
 
         public_prefixes = (
             "/api/auth/register",
