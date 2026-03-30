@@ -1,11 +1,9 @@
-from fastapi import APIRouter, Depends,HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from sqlalchemy import text
 
 from api.database.db import get_db
-from api.models.shop.product import Product
-from api.services.shop.product import ProductCreateService, ProductGetService, ProductUpdateService    
-from api.schemas.shop.product import ProductCreateRequest, ProductCreateResponse, ProductGetResponse, ProductUpdateRequest, ProductUpdateResponse, ProductDeleteRequest, ProductDeleteResponse
+from api.services.shop.product import ProductCreateService, ProductDeleteService, ProductGetService, ProductUpdateService    
+from api.schemas.shop.product import ProductCreateRequest, ProductCreateResponse, ProductGetResponse, ProductUpdateRequest, ProductUpdateResponse, ProductDeleteResponse
 
 router = APIRouter(prefix="/api/products", tags=["Products"])
 
@@ -17,22 +15,12 @@ def create_product(request: ProductCreateRequest, db: Session = Depends(get_db))
     return ProductCreateService.create_product(db, request)
 
 
+# DELETE /api/products/{id} - delete product
+
 @router.delete("/{id}", response_model=ProductDeleteResponse, status_code=200)
 def delete_product(id: int, db: Session = Depends(get_db)):
-
+    return ProductDeleteService.delete_product(db, id)
     
-    product = db.query(Product).filter(Product.id == id).first()
-
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-
-
-    db.delete(product)
-    db.commit()
-
-    return {
-    "id": id,
-    "message": "Product deleted successfully"}
     
 # PUT /api/products/{id} - update product
 
@@ -40,11 +28,13 @@ def delete_product(id: int, db: Session = Depends(get_db)):
 def update_product(id: int, request: ProductUpdateRequest, db: Session = Depends(get_db)):
     return ProductUpdateService.update_product(db, id, request)
     
+    
 # GET /api/products/{id} - get product by id 
 
 @router.get("/{id}", response_model=ProductGetResponse, status_code=200)
 def get_product(id: int, db: Session = Depends(get_db)):
     return ProductGetService.get_product_by_id(db, id)
+
 
 # GET /api/products/ - get all products
 

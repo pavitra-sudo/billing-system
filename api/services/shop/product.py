@@ -68,3 +68,21 @@ class ProductUpdateService:
             "price": product.price,
             "message": "Product updated successfully"
         }
+        
+class ProductDeleteService:
+    
+    @staticmethod
+    def delete_product(db: Session, product_id: int):
+
+        product = db.query(Product).filter(Product.id == id).first()
+
+        if not product:
+            raise HTTPException(status_code=404, detail="Product not found")
+
+
+        db.delete(product)
+        db.commit()
+
+        return {
+        "id": id,
+        "message": "Product deleted successfully"}

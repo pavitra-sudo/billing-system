@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+# Product Schemas
+
 class ProductCreateRequest(BaseModel):
     name: str
     price: float
@@ -17,8 +19,6 @@ class ProductCreateResponse(BaseModel):
         from_attributes = True   
         
         
-class ProductDeleteRequest(BaseModel):
-    id: int
         
         
 class ProductDeleteResponse(BaseModel):
