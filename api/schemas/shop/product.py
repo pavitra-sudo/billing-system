@@ -21,21 +21,7 @@ class ProductCreateResponse(BaseModel):
         
         
         
-class ProductUpdateRequest(BaseModel):
-    name: str
-    price: float
-    barcode: str = Field(..., max_length=50)   
 
-    
-    
-class ProductUpdateResponse(BaseModel):
-    id: int
-    name: str
-    price: float
-    message: str
-
-    class Config:
-        from_attributes = True   
         
         
 

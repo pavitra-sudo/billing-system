@@ -24,7 +24,7 @@ while True:
         
         
 
-#app.add_middleware(AuthMiddleware)  # global middleware for auth
+app.add_middleware(AuthMiddleware)  # global middleware for auth
 
 
 # tenant  routers
