@@ -3,8 +3,8 @@
 from datetime import datetime
 
 from fastapi import FastAPI
+from api.routers.shop import products
 from api.routers.tenant import createTenant, loginTenant
-from api.routers.shop.product import createProduct, deleteProduct, getProduct, updateProduct
 from api.database.db import PublicBase, engine
 from api.middleware.auth2Middleware import AuthMiddleware
 from time import sleep
@@ -33,10 +33,8 @@ app.include_router(createTenant.router)
 app.include_router(loginTenant.router)
 
 # product routers
-app.include_router(createProduct.router)
-app.include_router(deleteProduct.router)
-app.include_router(updateProduct.router)
-app.include_router(getProduct.router)
+app.include_router(products.router)
+
 
 
 

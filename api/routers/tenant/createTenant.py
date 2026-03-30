@@ -6,7 +6,7 @@ from ...schemas.tenant.tenantCreateSchema import TenantCreate, TenantResponse
 from ...services.tenant.tenantCreateService import ShopOwnerService
 
 router = APIRouter(
-    prefix="/create-tenant",
+    prefix="/api/auth/register",
     tags=["Tenant Management"]
 )
 

@@ -23,16 +23,15 @@ class ProductDeleteRequest(BaseModel):
         
 class ProductDeleteResponse(BaseModel):
     id: int
-    name: str
     message: str
 
     class Config:
         from_attributes = True   # 👈 required for ORM → JSON
         
 class ProductUpdateRequest(BaseModel):
-    id: int
-    name: str
-    price: float
+    name: Optional[str]
+    price: Optional[float]
+    
     
 class ProductUpdateResponse(BaseModel):
     id: int
