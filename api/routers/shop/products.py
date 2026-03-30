@@ -4,7 +4,7 @@ from sqlalchemy import text
 
 from api.database.db import get_db
 from api.models.shop.product import Product
-from api.services.shop.product import ProductCreateService, ProductGetService    
+from api.services.shop.product import ProductCreateService, ProductGetService, ProductUpdateService    
 from api.schemas.shop.product import ProductCreateRequest, ProductCreateResponse, ProductGetResponse, ProductUpdateRequest, ProductUpdateResponse, ProductDeleteRequest, ProductDeleteResponse
 
 router = APIRouter(prefix="/api/products", tags=["Products"])
@@ -34,32 +34,11 @@ def delete_product(id: int, db: Session = Depends(get_db)):
     "id": id,
     "message": "Product deleted successfully"}
     
-    
-@router.patch("/{id}", response_model=ProductUpdateResponse, status_code=200)
+# PUT /api/products/{id} - update product
+
+@router.put("/{id}", response_model=ProductUpdateResponse, status_code=200)
 def update_product(id: int, request: ProductUpdateRequest, db: Session = Depends(get_db)):
-
-    # 🔹 Fetch product
-    product = db.query(Product).filter(Product.id == id).first()
-
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-
-    if request.name is not None:
-        product.name = request.name  # type: ignore
-    if request.price is not None:
-        product.price = request.price  # type: ignore
-        
-    db.commit()
-    db.refresh(product)
-
-
-    return {
-        "id": id,
-        "name": product.name,
-        "price": product.price,
-        "message": "Product updated successfully"
-    }
-    
+    return ProductUpdateService.update_product(db, id, request)
     
 # GET /api/products/{id} - get product by id 
 

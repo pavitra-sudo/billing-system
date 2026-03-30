@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from api.models.shop import product
 from api.models.shop.product import Product
-from api.schemas.shop.product import ProductCreateRequest 
+from api.schemas.shop.product import ProductCreateRequest ,ProductUpdateRequest
 
 
 class ProductGetService:
@@ -43,3 +42,29 @@ class ProductCreateService:
         db.refresh(product)
 
         return product
+    
+class ProductUpdateService:
+    
+    @staticmethod
+    def update_product(db: Session, product_id: int, request: ProductUpdateRequest):
+
+        product = db.query(Product).filter(Product.id == id).first()
+
+        if not product:
+            raise HTTPException(status_code=404, detail="Product not found")
+
+        if request.name is not None:
+            product.name = request.name  # type: ignore
+        if request.price is not None:
+            product.price = request.price  # type: ignore
+            
+        db.commit()
+        db.refresh(product)
+
+
+        return {
+            "id": id,
+            "name": product.name,
+            "price": product.price,
+            "message": "Product updated successfully"
+        }
