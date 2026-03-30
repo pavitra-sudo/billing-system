@@ -14,7 +14,7 @@ class ProductCreateResponse(BaseModel):
     price: float
 
     class Config:
-        from_attributes = True   # 👈 required for ORM → JSON
+        from_attributes = True   
         
         
 class ProductDeleteRequest(BaseModel):
@@ -26,7 +26,7 @@ class ProductDeleteResponse(BaseModel):
     message: str
 
     class Config:
-        from_attributes = True   # 👈 required for ORM → JSON
+        from_attributes = True   
         
 class ProductUpdateRequest(BaseModel):
     name: Optional[str]
@@ -40,7 +40,7 @@ class ProductUpdateResponse(BaseModel):
     message: str
 
     class Config:
-        from_attributes = True   # 👈 required for ORM → JSON
+        from_attributes = True   
         
         
 
@@ -51,5 +51,5 @@ class ProductGetResponse(BaseModel):
     price: float
 
     class Config:
-        from_attributes = True   # 👈 required for ORM → JSON
+        from_attributes = True   
         
