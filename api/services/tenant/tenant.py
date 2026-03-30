@@ -1,11 +1,14 @@
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi import HTTPException
 
+from api.auth.token import create_access_token
+from api.database import db
 from api.models.tenant.tenant import Tenant
 from api.database.db import engine, ShopBase
 from api.models.shop.product import Product
-from api.auth.hashing import get_password_hash
+from api.auth.hashing import get_password_hash, verify_password
 
 
 
@@ -65,3 +68,27 @@ class ShopOwnerService:
         except Exception as e:
             db.rollback()
             raise HTTPException(status_code=500, detail=str(e))
+        
+        
+class TenantLoginService:
+    def tenant_login(self, db: Session, request: OAuth2PasswordRequestForm):  
+        user = db.query(Tenant).filter(Tenant.email == request.username).first()
+
+        if not user:
+            raise HTTPException(status_code=401, detail="Invalid email")
+
+        if not verify_password(request.password, user.password):
+            raise HTTPException(status_code=401, detail="Invalid password")
+
+        token = create_access_token({
+            "sub": user.email,
+            "schema": user.schema_name
+        })
+
+        return {
+            "access_token": token,
+            "token_type": "bearer",
+            "schema": user.schema_name  # optional (debugging)
+        }
+    
+    

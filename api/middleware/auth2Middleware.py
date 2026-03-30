@@ -25,8 +25,8 @@ class AuthMiddleware(BaseHTTPMiddleware):
         print("➡️ PATH:", path)
 
         public_prefixes = (
-            "/login-tenant",
             "/api/auth/register",
+            "/api/auth/login",
             "/docs",
             "/openapi",
             "/redoc"
