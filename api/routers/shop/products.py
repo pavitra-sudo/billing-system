@@ -40,7 +40,7 @@ def get_product(id: int, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=list[ProductGetResponse], status_code=200)
 def get_all_products(db: Session = Depends(get_db),name: str | None = None):
-    return ProductGetService.get_all_products(db)
+    return ProductGetService.get_all_products(db,name)
 
 #PATCH /api/products/{id} - partial update product (optional fields)
 @router.patch("/{id}", response_model=ProductPatchResponse, status_code=200, responses= {404: {"description": "Product not found"}})
