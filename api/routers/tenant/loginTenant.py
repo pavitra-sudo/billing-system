@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 
 from api.database.db import get_db
-from api.models.tenant.tenantModel import Tenant
+from api.models.tenant.tenant import Tenant
 from api.auth.hashing import  verify_password
 from api.auth.token import create_access_token
 

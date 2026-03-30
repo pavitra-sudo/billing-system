@@ -2,10 +2,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi import HTTPException
 
-from api.models.tenant.tenantModel import Tenant
+from api.models.tenant.tenant import Tenant
 from api.database.db import engine, ShopBase
 from api.models.shop.product import Product
-from api.models.shop.customer import Customer
 from api.auth.hashing import get_password_hash
 
 

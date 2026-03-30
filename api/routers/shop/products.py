@@ -4,39 +4,29 @@ from sqlalchemy import text
 
 from api.database.db import get_db
 from api.models.shop.product import Product
-from api.schemas.shop.productSchema import ProductCreateRequest, ProductCreateResponse, ProductGetResponse, ProductUpdateRequest, ProductUpdateResponse, ProductDeleteRequest, ProductDeleteResponse
+from api.services.shop.product import ProductCreateService, ProductGetService    
+from api.schemas.shop.product import ProductCreateRequest, ProductCreateResponse, ProductGetResponse, ProductUpdateRequest, ProductUpdateResponse, ProductDeleteRequest, ProductDeleteResponse
 
 router = APIRouter(prefix="/api/products", tags=["Products"])
 
 
-# 🔹 helper: set schema
 
-
+# POST /api/products/ - create product
 @router.post("/", response_model=ProductCreateResponse)
 def create_product(request: ProductCreateRequest, db: Session = Depends(get_db)):
+    return ProductCreateService.create_product(db, request)
 
-
-    product = Product(
-        name=request.name,
-        price=request.price
-    )
-
-    db.add(product)
-    db.commit()
-    db.refresh(product)
-
-    return product
 
 @router.delete("/{id}", response_model=ProductDeleteResponse, status_code=200)
 def delete_product(id: int, db: Session = Depends(get_db)):
 
-    # ✅ Fetch from DB (makes it persistent)
+    
     product = db.query(Product).filter(Product.id == id).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    # ✅ Now safe to delete
+
     db.delete(product)
     db.commit()
 
@@ -58,12 +48,11 @@ def update_product(id: int, request: ProductUpdateRequest, db: Session = Depends
         product.name = request.name  # type: ignore
     if request.price is not None:
         product.price = request.price  # type: ignore
-
-    # 🔹 Commit changes
+        
     db.commit()
     db.refresh(product)
 
-    # 🔹 Return updated object
+
     return {
         "id": id,
         "name": product.name,
@@ -71,14 +60,17 @@ def update_product(id: int, request: ProductUpdateRequest, db: Session = Depends
         "message": "Product updated successfully"
     }
     
+    
+# GET /api/products/{id} - get product by id 
+
 @router.get("/{id}", response_model=ProductGetResponse, status_code=200)
 def get_product(id: int, db: Session = Depends(get_db)):
+    return ProductGetService.get_product_by_id(db, id)
 
-    # ✅ Fetch from DB (makes it persistent)
-    product = db.query(Product).filter(Product.id == id).first()
+# GET /api/products/ - get all products
 
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
+@router.get("/", response_model=list[ProductGetResponse], status_code=200)
+def get_all_products(db: Session = Depends(get_db)):
+    return ProductGetService.get_all_products(db)
 
-    # ✅ Return the product
-    return product
+   
