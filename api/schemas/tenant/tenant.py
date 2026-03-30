@@ -1,6 +1,6 @@
 # schemas/shop_owner.py
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 # Request Schema (input)
@@ -8,7 +8,8 @@ class TenantCreate(BaseModel):
     name: str
     email: EmailStr
     password: str = Field(..., min_length=8, max_length=255)
-
+    
+  
 
 #  Response Schema (output)
 class TenantResponse(BaseModel):

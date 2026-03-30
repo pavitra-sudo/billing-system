@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 
 # Product Schemas
 
@@ -45,7 +45,6 @@ class ProductUpdateResponse(BaseModel):
         
         
 
-        
 class ProductGetResponse(BaseModel):
     id: int
     name: str
@@ -54,3 +53,17 @@ class ProductGetResponse(BaseModel):
     class Config:
         from_attributes = True   
         
+        
+class ProductPatchRequest(BaseModel):
+    name: Optional[str] = None
+    price: Optional[float] = Field(default=None, gt=0)
+  
+    
+class ProductPatchResponse(BaseModel):
+    id: int
+    name: str
+    price: float
+    message: str
+
+    class Config:
+        from_attributes = True
