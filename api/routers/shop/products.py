@@ -14,12 +14,6 @@ router = APIRouter(prefix="/api/products", tags=["Products"])
 def create_product(request: ProductCreateRequest, db: Session = Depends(get_db)):
     return ProductService.create_product(db, request)
 
-
-# DELETE /api/products/{id} - delete product
-@router.delete("/{id}",  status_code=204,responses= {404: {"description": "Product not found"}})
-def delete_product(id: int, db: Session = Depends(get_db)):
-    return ProductService.delete_product(db, id)
-
 # GET /api/products/ - get all products
 @router.get("/", response_model=list[ProductGetResponse], status_code=200)
 def get_all_products(db: Session = Depends(get_db),name: str | None = None):
@@ -35,4 +29,8 @@ def get_product(id: int, db: Session = Depends(get_db)):
 def partial_update_product(id: int, request: ProductPatchRequest, db: Session = Depends(get_db)):
     return ProductService.patch_product(db, id, request)
 
+# DELETE /api/products/{id} - delete product
+@router.delete("/{id}",  status_code=204,responses= {404: {"description": "Product not found"}})
+def delete_product(id: int, db: Session = Depends(get_db)):
+    return ProductService.delete_product(db, id)
    
