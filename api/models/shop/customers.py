@@ -1,5 +1,7 @@
 from sqlalchemy import Column, DateTime, Integer, String
 from datetime import datetime
+
+from sqlalchemy.orm import relationship
 from api.database.db import ShopBase  
 
 class Customer(ShopBase):
@@ -11,4 +13,7 @@ class Customer(ShopBase):
     mobile_number = Column(String(10), unique=True, nullable=False)
     
     created_at = Column(DateTime, default=datetime.utcnow)
+    orders = relationship("Orders", back_populates="customer")
+    
+
     

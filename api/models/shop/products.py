@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Numeric, DateTime
 from datetime import datetime
+
+from sqlalchemy.orm import relationship
 from api.database.db import ShopBase  # or PublicBase
 
 class Product(ShopBase):
@@ -12,3 +14,4 @@ class Product(ShopBase):
     price = Column(Numeric(10, 2), nullable=False)
     
     created_at = Column(DateTime, default=datetime.utcnow)
+    orderitems = relationship("OrderItems", back_populates="product")

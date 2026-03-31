@@ -9,6 +9,8 @@ from api.models.tenant.tenant import Tenant
 from api.database.db import engine, ShopBase
 from api.models.shop.products import Product
 from api.models.shop.customers import Customer
+from api.models.shop.orderitems import OrderItem
+from api.models.shop.orders import Orders 
 from api.auth.hashing import get_password_hash, verify_password
 
 
