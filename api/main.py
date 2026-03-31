@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from datetime import datetime
 from api.models.tenant.tenant import Tenant
-from api.routers.shop import products
+from api.routers.shop import customers, products
 from api.routers.tenant import  tenant
 from api.database.db import PublicBase, engine
 from api.middleware.auth2Middleware import AuthMiddleware
@@ -32,7 +32,7 @@ app.include_router(tenant.router)
 
 # product routers
 app.include_router(products.router)
-
+app.include_router(customers.router)
 
 
 

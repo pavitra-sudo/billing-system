@@ -7,7 +7,8 @@ from api.auth.token import create_access_token
 from api.database import db
 from api.models.tenant.tenant import Tenant 
 from api.database.db import engine, ShopBase
-from api.models.shop.product import Product
+from api.models.shop.products import Product
+from api.models.shop.customers import Customer
 from api.auth.hashing import get_password_hash, verify_password
 
 

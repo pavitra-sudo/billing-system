@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from api.models.shop.product import Product
-from api.schemas.shop.product import ProductCreateRequest, ProductPatchRequest 
+from api.models.shop.products import Product
+from api.schemas.shop.products import ProductCreateRequest, ProductPatchRequest 
 
 
 class ProductService:
